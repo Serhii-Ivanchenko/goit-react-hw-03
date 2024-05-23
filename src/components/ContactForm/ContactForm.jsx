@@ -1,10 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useId } from 'react';
+import { nanoid } from 'nanoid';
 
+export default function ContactForm({ onContactAdd }) {
+  const nameFieldId = useId();
+  const numberFieldId = useId();
+  const contactId = nanoid(10);
 
-export default function ContactForm() {
-    const nameFieldId = useId();
-    const numberFieldId = useId();
   return (
     <Formik
       initialValues={{
@@ -12,7 +14,12 @@ export default function ContactForm() {
         number: '',
       }}
       onSubmit={(values, actions) => {
-        console.log(values);
+
+        onContactAdd({
+          id: contactId,
+          name: values.name,
+          number: values.number,
+        });
         actions.resetForm();
       }}
     >

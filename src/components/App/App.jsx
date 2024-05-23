@@ -1,4 +1,3 @@
-
 import { useId, useState } from 'react';
 import * as Yup from 'yup';
 
@@ -17,13 +16,16 @@ const initialValue = [
 function App() {
   const [contacts, setContacts] = useState(initialValue);
 
-  
+  const addContact = newContact => {
+    setContacts(prevContactList => {
+      return [...prevContactList, newContact];
+    });
+  };
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm />
-      
+      <ContactForm onContactAdd={addContact} />
 
       <SearchBox />
 
