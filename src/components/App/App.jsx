@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import * as Yup from 'yup';
+
 
 import './App.css';
 import ContactForm from '../ContactForm/ContactForm';
