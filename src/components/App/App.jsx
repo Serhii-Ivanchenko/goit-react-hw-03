@@ -1,5 +1,4 @@
-import { useId, useState } from 'react';
-
+import { useEffect, useState } from 'react';
 
 import './App.css';
 import ContactForm from '../ContactForm/ContactForm';
@@ -13,9 +12,20 @@ const initialContacts = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
+const initialContactsDisplay = () => {
+  const savedContactsList = localStorage.getItem('contacts-list');
+  return savedContactsList !== null
+    ? JSON.parse(savedContactsList)
+    : initialContacts;
+};
+
 function App() {
-  const [contacts, setContacts] = useState(initialContacts);
+  const [contacts, setContacts] = useState(initialContactsDisplay);
   const [searchName, setSearchName] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('contacts-list', JSON.stringify(contacts));
+  }, [contacts]);
 
   const addContact = newContact => {
     setContacts(prevContactList => {
@@ -32,7 +42,6 @@ function App() {
   const searchedContacts = contacts.filter(contact =>
     contact.name.toLocaleLowerCase().includes(searchName.toLocaleLowerCase())
   );
-
 
   return (
     <div>
