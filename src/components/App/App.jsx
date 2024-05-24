@@ -6,7 +6,7 @@ import ContactForm from '../ContactForm/ContactForm';
 import SearchBox from '../SearchBox/SearchBox';
 import ContactList from '../ContactList/ContactList';
 
-const initialValue = [
+const initialContacts = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
@@ -14,7 +14,8 @@ const initialValue = [
 ];
 
 function App() {
-  const [contacts, setContacts] = useState(initialValue);
+  const [contacts, setContacts] = useState(initialContacts);
+  const [searchName, setSearchName] = useState('');
 
   const addContact = newContact => {
     setContacts(prevContactList => {
@@ -28,14 +29,23 @@ function App() {
     });
   };
 
+  const searchedContacts = contacts.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(searchName.toLocaleLowerCase())
+  );
+
+
   return (
     <div>
       <h1>Phonebook</h1>
+
       <ContactForm onContactAdd={addContact} />
 
-      <SearchBox />
+      <SearchBox value={searchName} onSearch={setSearchName} />
 
-      <ContactList contacts={contacts} onContactDelete={deleteContact} />
+      <ContactList
+        contacts={searchedContacts}
+        onContactDelete={deleteContact}
+      />
     </div>
   );
 }
