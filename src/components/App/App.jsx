@@ -22,6 +22,12 @@ function App() {
     });
   };
 
+  const deleteContact = contactId => {
+    setContacts(prevContactList => {
+      return prevContactList.filter(contact => contact.id !== contactId);
+    });
+  };
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -29,7 +35,7 @@ function App() {
 
       <SearchBox />
 
-      <ContactList contacts={contacts} />
+      <ContactList contacts={contacts} onContactDelete={deleteContact} />
     </div>
   );
 }
